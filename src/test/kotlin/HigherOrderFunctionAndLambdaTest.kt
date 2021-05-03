@@ -11,7 +11,7 @@ class HigherOrderFunctionAndLambdaTest {
         val expected = "HELLO, WORLD"
         val initial = "hello, world"
 
-        // This is a lambda
+        // This is a lambda - function literal
         val formatter: (String) -> String = { it.toUpperCase() }
 
         assertEquals(expected, format(initial, formatter))
@@ -22,7 +22,7 @@ class HigherOrderFunctionAndLambdaTest {
         val expected = "hello, world"
         val initial = "Hello, World"
 
-        // This is an anonymous function
+        // This is an anonymous function - function literal
         val formatter = fun(value: String): String = value.toLowerCase()
 
         assertEquals(expected, format(initial, formatter))
@@ -43,6 +43,15 @@ class HigherOrderFunctionAndLambdaTest {
         assertEquals(expectedFreeCost, freeMembershipCalculator(order))
         assertEquals(expectedStandardCost, standardMembershipCalculator(order))
         assertEquals(expectedVipCost, vipMembershipCalculator(order))
+    }
+
+    @Test
+    fun `test a lambda as a class extension`() {
+        val initial = "Hello, World"
+        val expected = "Hello, World!"
+        val exclaimer: String.() -> String = { this.plus("!") }
+
+        assertEquals(expected, initial.exclaimer())
     }
 }
 
